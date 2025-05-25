@@ -150,6 +150,14 @@ BEGIN
     END IF;
 END $$
 
+-- Uji sp_RegistrasiEntitasBaru
+-- Menguji pendaftaran entitas yang sudah ada ('Trippi Troppa Dancer') dan baru ('Meme Baru 2025').
+SET @status = '';
+CALL sp_RegistrasiEntitasBaru('Trippi Troppa Dancer', 'Makhluk Hidup', 8, 'Video TikTok India', @status);
+SELECT @status; -- Output: 'GAGAL! Entitas "Trippi Troppa Dancer" sudah terdaftar.' karena entitas sudah ada di data awal.
+CALL sp_RegistrasiEntitasBaru('Meme Baru 2025', 'Fenomena Abstrak', 7, 'Twitter Viral', @status);
+SELECT @status; -- Output: 'SUKSES! Entitas "Meme Baru 2025" telah ditambahkan.' karena entitas baru.
+
 -- Function: fn_HitungSkorViralitasKonten
 -- Tujuan: Menghitung skor viralitas konten berdasarkan rumus: (views / 10000) + (likes * 0.5) + (shares * 1).
 -- Bonus poin: 'CROCODILO!' (+100), 'Tinggi' (+50), 'Sedang' (+20).
@@ -180,6 +188,11 @@ BEGIN
     RETURN v_skor;
 END $$
 
+-- Uji fn_HitungSkorViralitasKonten
+-- Menampilkan skor viralitas untuk semua konten menggunakan rumus (views / 10000) + (likes * 0.5) + (shares * 1) + bonus.
+SELECT ID_Konten, Judul_Konten, fn_HitungSkorViralitasKonten(ID_Konten) AS Skor_Viralitas
+FROM KontenAnomali;
+
 -- Stored Procedure: sp_GetStatistikEntitasPalingPopuler
 -- Tujuan: Menemukan entitas dengan total views tertinggi dari semua konten terkait.
 -- Output: Nama entitas, total views, dan jumlah konten terkait. Jika tidak ada data, return 'Tidak ada data konten', 0, 0.
@@ -208,6 +221,12 @@ BEGIN
     END IF;
 END $$
 
+SET @nama_entitas = '';
+SET @total_views = 0;
+SET @jumlah_konten = 0;
+CALL sp_GetStatistikEntitasPalingPopuler(@nama_entitas, @total_views, @jumlah_konten);
+SELECT @nama_entitas, @total_views, @jumlah_konten;
+
 -- Stored Procedure: sp_LaporkanKontenBrainrotTeratasBulanan
 -- Tujuan: Menampilkan 5 konten teratas berdasarkan skor viralitas untuk tahun dan bulan tertentu.
 -- Output: Judul konten, skor viralitas, dan tanggal unggah.
@@ -223,6 +242,8 @@ BEGIN
     ORDER BY Skor_Viralitas DESC
     LIMIT 5;
 END $$
+
+CALL sp_LaporkanKontenBrainrotTeratasBulanan(2023, 8);
 
 -- Function: fn_KlasifikasiAnomaliOtomatis
 -- Tujuan: Mengklasifikasikan konten berdasarkan tag-nya di KontenTag.
@@ -265,6 +286,9 @@ BEGIN
         RETURN 'Anomali Standar';
     END IF;
 END $$
+
+SELECT ID_Konten, Judul_Konten, fn_KlasifikasiAnomaliOtomatis(ID_Konten) AS Klasifikasi
+FROM KontenAnomali;
 
 DELIMITER ;
 
