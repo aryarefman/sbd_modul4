@@ -5,51 +5,131 @@ use WarungPakBudi-NRP;
 
 // Koleksi: produk
 db.produk.insertMany([
-  { nama: "Teh Botol", kategori: "Minuman", stok: 8, harga_beli: 3000 },
-  { nama: "Air Mineral", kategori: "Minuman", stok: 25, harga_beli: 2000 },
-  { nama: "Susu Coklat", kategori: "Minuman", stok: 6, harga_beli: 4500 },
-  { nama: "Indomie Goreng Spesial", kategori: "Makanan", stok: 30, harga_beli: 2500 },
-  { nama: "Permen X", kategori: "Snack", stok: 15, harga_beli: 500 }
+  {
+    nama: "Sabun Mandi Lifebuoy Total 10",
+    kategori: "Perawatan Diri",
+    harga_beli: 3000,
+    harga_jual: 4000,
+    stok: 75,
+    satuan: "pcs",
+    tanggal_masuk: new Date("2025-05-01")
+  },
+  {
+    nama: "Kopi Kapal Api Special Mix",
+    kategori: "Minuman",
+    harga_beli: 1000,
+    harga_jual: 1500,
+    stok: 200,
+    satuan: "sachet",
+    tanggal_masuk: new Date("2025-04-20")
+  },
+  {
+    nama: "Beras Rojolele Super",
+    kategori: "Bahan Pokok",
+    harga_beli: 60000,
+    harga_jual: 65000,
+    stok: 30,
+    satuan: "karung 5kg",
+    tanggal_masuk: new Date("2025-05-10")
+  },
+  {
+    nama: "Susu UHT Cokelat 250ml",
+    kategori: "Minuman",
+    harga_beli: 4500,
+    harga_jual: 5500,
+    stok: 8,
+    satuan: "kotak",
+    tanggal_masuk: new Date("2025-05-15")
+  },
+  {
+    nama: "Deterjen Bubuk Attack",
+    kategori: "Perlengkapan Rumah",
+    harga_beli: 15000,
+    harga_jual: 17500,
+    stok: 40,
+    satuan: "pack 800gr",
+    tanggal_masuk: new Date("2025-04-25")
+  }
 ]);
 
 // Koleksi: pelanggan
 db.pelanggan.insertMany([
-  { nama: "Siti Aminah", alamat: "Jl. Melati No. 1, Surabaya", poin: 30, tanggal_bergabung: new Date("2023-05-10") },
-  { nama: "Joko Santoso", alamat: "Jl. Mawar No. 10, Sidoarjo", poin: 15, tanggal_bergabung: new Date("2022-11-01") },
-  { nama: "Pak Budi Hartono", alamat: "Jl. Kenari No. 8, Gresik", poin: 45, tanggal_bergabung: new Date("2021-07-12") }
+  {
+    nama: "Siti Aminah",
+    nomor_telepon: "081234567890",
+    alamat: "Jl. Merpati No. 1, Surabaya",
+    poin_loyalitas: 50,
+    tanggal_bergabung: new Date("2023-11-15")
+  },
+  {
+    nama: "Budi Hartono",
+    nomor_telepon: "087654321098",
+    alamat: "Jl. Elang No. 22, Surabaya",
+    poin_loyalitas: 120,
+    tanggal_bergabung: new Date("2024-01-20")
+  },
+  {
+    nama: "Retno Wulandari",
+    nomor_telepon: "085550001111",
+    alamat: "Jl. Kenari Indah Blok C3, Sidoarjo",
+    poin_loyalitas: 75,
+    tanggal_bergabung: new Date("2024-03-01")
+  }
 ]);
 
 // Koleksi: transaksi
 db.transaksi.insertMany([
   {
-    tanggal: new Date("2025-05-22"),
-    total_belanja: 37000,
-    metode_pembayaran: "QRIS",
-    nama_pelanggan: "Siti Aminah"
-  },
-  {
-    tanggal: new Date("2025-05-22"),
-    total_belanja: 28000,
-    metode_pembayaran: "Tunai",
-    nama_pelanggan: "Joko Santoso"
-  },
-  {
-    tanggal: new Date("2022-12-15"),
-    total_belanja: 15000,
-    metode_pembayaran: "Tunai",
-    nama_pelanggan: "Pak Budi Hartono"
-  },
-  {
-    tanggal: new Date("2021-10-02"),
+    nama_pelanggan: "Siti Aminah",
+    tanggal: new Date("2025-05-22T16:15:00"),
+    metode_pembayaran: "Debit",
     total_belanja: 22000,
-    metode_pembayaran: "Tunai",
-    nama_pelanggan: "Joko Santoso"
+    status: "Selesai",
+    items: [
+      { nama_produk: "Susu UHT Cokelat 250ml", harga: 5500, jumlah: 4 }
+    ]
   },
   {
-    tanggal: new Date("2025-05-20"),
-    total_belanja: 18000,
-    metode_pembayaran: "Transfer Bank",
-    nama_pelanggan: "Siti Aminah"
+    nama_pelanggan: "Siti Aminah",
+    tanggal: new Date("2025-05-20T17:00:00"),
+    metode_pembayaran: "Tunai",
+    total_belanja: 30000,
+    status: "Selesai",
+    items: [
+      { nama_produk: "Indomie Goreng Spesial", harga: 3000, jumlah: 5 },
+      { nama_produk: "Kopi Kapal Api Special Mix", harga: 1500, jumlah: 10 }
+    ]
+  },
+  {
+    nama_pelanggan: "Budi Hartono",
+    tanggal: new Date("2025-05-21T21:30:00"),
+    metode_pembayaran: "QRIS",
+    total_belanja: 73000,
+    status: "Selesai",
+    items: [
+      { nama_produk: "Beras Rojolele Super", harga: 65000, jumlah: 1 },
+      { nama_produk: "Sabun Mandi Lifebuoy Total 10", harga: 4000, jumlah: 2 }
+    ]
+  },
+  {
+    nama_pelanggan: "Retno Wulandari",
+    tanggal: new Date("2022-12-01T23:45:00"),
+    metode_pembayaran: "Tunai",
+    total_belanja: 10000,
+    status: "Selesai",
+    items: [
+      { nama_produk: "Permen X", harga: 1000, jumlah: 10 }
+    ]
+  },
+  {
+    nama_pelanggan: null,
+    tanggal: new Date("2025-05-22T18:00:00"),
+    metode_pembayaran: "Tunai",
+    total_belanja: 6000,
+    status: "Selesai",
+    items: [
+      { nama_produk: "Indomie Goreng Spesial", harga: 3000, jumlah: 2 }
+    ]
   }
 ]);
 
