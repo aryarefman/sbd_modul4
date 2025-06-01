@@ -141,8 +141,18 @@ db.pelanggan.find({ nama: "Siti Aminah" });
 
 // ========== 4. Transaksi tanggal 22 Mei 2025 ==========
 db.transaksi.find(
-  { tanggal: ISODate("2025-05-22") },
-  { _id: 0, tanggal: 1, total_belanja: 1, metode_pembayaran: 1 }
+  {
+    tanggal: {
+      $gte: ISODate("2025-05-22T00:00:00.000Z"),
+      $lt: ISODate("2025-05-23T00:00:00.000Z")
+    }
+  },
+  {
+    _id: 0,
+    tanggal: 1,
+    total_belanja: 1,
+    metode_pembayaran: 1
+  }
 );
 
 // ========== 5. Daftar unik kategori produk ==========
